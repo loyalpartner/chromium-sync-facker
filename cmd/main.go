@@ -21,6 +21,8 @@ func main() {
 		)
 
 		zw, _ := gzip.NewReader(r.Body)
+		defer zw.Close()
+
 		data, err := ioutil.ReadAll(zw)
 		if err := proto.Unmarshal(data, &msg); err != nil {
 			logrus.Error(err)
