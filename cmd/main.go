@@ -16,8 +16,6 @@ func main() {
 	logrus.SetReportCaller(true)
 
 	http.HandleFunc("/chrome-sync/dev/command/", func(rw http.ResponseWriter, r *http.Request) {
-		rw.Write([]byte(r.Method))
-
 		var (
 			msg sync_pb.ClientToServerMessage
 		)
@@ -31,8 +29,7 @@ func main() {
 		logrus.Debugf("ClientToServerMessage msg is %s", msg.String())
 
 		var resp sync_pb.ClientToServerResponse
-		var birthday string = "123"
-		resp.StoreBirthday = &birthday
+		resp.StoreBirthday = proto.String("123")
 		data, err = proto.Marshal(&resp)
 
 		if err != nil {
